@@ -2,7 +2,27 @@ from tkinter import *
 from tkinter import messagebox as mb
 from cryptography.fernet import Fernet
 import json
+"""
+Варианты использования:
 
+
+Сообщение в Data и ключ в Key:
+    Нажать Encrypt - Зашифровать сообщение Data используя ключ Key и вывести зашифрованное сообщение в поле вывода
+
+    Нажать Decrypt - Расшифровать сообщение Data используя ключ Key и вывести расшифрованное сообщение в поле вывода
+
+    
+Сообщение в Data, ключ в Key и имя в Name:
+    Нажать Encrypt - Зашифровать сообщение Data используя ключ Key, вывести зашифрованное сообщение в поле вывода, а также записать
+                     его в файл data.json с именем Name (чтобы потом получить по имени)
+
+    Нажать Decrypt - |Поле Data игнорируется| Получить зашифрованное сообщение из файла data.json под именем Name, после чего расшифровать
+                      используя ключ Key и вывести расшифрованное сообщение в поле вывода
+
+Ключ в Key и имя в Name:
+    Нажать Decrypt - Получить зашифрованное сообщение из файла data.json под именем Name, после чего расшифровать
+                     используя ключ Key и вывести расшифрованное сообщение в поле вывода
+"""
 BG = 'gray60'
 
 root = Tk()
@@ -64,7 +84,12 @@ def make_key():
 
 def encrypt_data():
     text = data_var.get()
+    if text.replace(' ', '') == '':
+        insert('Insert Data')
+        return
+    
     text = text.encode()
+    
 
     cipher_key = make_key()
     try:  cipher = Fernet(cipher_key)
@@ -101,6 +126,8 @@ def encrypt():
     name = name_var.get()
 
     encrypted = encrypt_data()
+
+    
     if encrypted:
         insert(encrypted)
 
