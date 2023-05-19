@@ -32,6 +32,13 @@ root.resizable(False, False)
 root['bg'] = BG
 root.eval('tk::PlaceWindow . center')
 
+try:
+    open('data.json', 'r')
+except:
+    with open('data.json', 'x') as f:
+        json.dump({}, f)
+    mb.showinfo('File Fixed', "Автоматически создан файл data.json, так как его не было")
+
 def fix_file():
     with open('data.json', 'w') as f:
         json.dump({}, f)
