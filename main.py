@@ -25,6 +25,20 @@ import json
 """
 BG = 'gray60'
 
+# Проверка файла ==
+try:
+    open('data.json', 'r')
+except:
+    if mb.askyesno('Нет файла', f"В текущей директори нету файла data.json, создать его? Основная директория файла:\n{__file__[:-7]}\n?"):
+        with open('data.json', 'x') as f:
+            json.dump({}, f)
+        mb.showinfo('File Fixed', "Cоздан файл data.json")
+    else:
+        exit()
+
+
+# =================
+
 root = Tk()
 root.geometry('400x205')
 root.title('Secure Independent Storage')
@@ -32,12 +46,6 @@ root.resizable(False, False)
 root['bg'] = BG
 root.eval('tk::PlaceWindow . center')
 
-try:
-    open('data.json', 'r')
-except:
-    with open('data.json', 'x') as f:
-        json.dump({}, f)
-    mb.showinfo('File Fixed', "Автоматически создан файл data.json, так как его не было")
 
 def fix_file():
     with open('data.json', 'w') as f:
